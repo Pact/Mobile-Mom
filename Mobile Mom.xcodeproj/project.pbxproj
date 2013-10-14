@@ -52,7 +52,6 @@
 		275AFB7817CD3CA6003BB54D /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275AFA5517CD3CA5003BB54D /* Raleway-Regular.ttf */; };
 		275AFB7917CD3CA6003BB54D /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275AFA5617CD3CA5003BB54D /* Raleway-SemiBold.ttf */; };
 		275AFB7A17CD3CA6003BB54D /* Raleway-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275AFA5717CD3CA5003BB54D /* Raleway-Thin.ttf */; };
-		275AFB7B17CD3CA6003BB54D /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AFA5D17CD3CA5003BB54D /* iCarousel.m */; };
 		275AFB7C17CD3CA6003BB54D /* RelativityLaws.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AFA6017CD3CA5003BB54D /* RelativityLaws.m */; };
 		275AFB7D17CD3CA6003BB54D /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AFA6317CD3CA5003BB54D /* REMenu.m */; };
 		275AFB7E17CD3CA6003BB54D /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AFA6517CD3CA5003BB54D /* REMenuContainerView.m */; };
@@ -363,8 +362,6 @@
 		275AFA5617CD3CA5003BB54D /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-SemiBold.ttf"; sourceTree = "<group>"; };
 		275AFA5717CD3CA5003BB54D /* Raleway-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Thin.ttf"; sourceTree = "<group>"; };
 		275AFA5917CD3CA5003BB54D /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		275AFA5C17CD3CA5003BB54D /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
-		275AFA5D17CD3CA5003BB54D /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		275AFA5F17CD3CA5003BB54D /* RelativityLaws.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelativityLaws.h; sourceTree = "<group>"; };
 		275AFA6017CD3CA5003BB54D /* RelativityLaws.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelativityLaws.m; sourceTree = "<group>"; };
 		275AFA6217CD3CA5003BB54D /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenu.h; sourceTree = "<group>"; };
@@ -843,21 +840,11 @@
 			isa = PBXGroup;
 			children = (
 				279A302417D8D94D0063F29C /* catalyze-ios-sdk */,
-				275AFA5B17CD3CA5003BB54D /* iCarousel */,
 				275AFA5E17CD3CA5003BB54D /* LayoutOfRelativity */,
 				275AFA6117CD3CA5003BB54D /* REMenu */,
 			);
 			name = Libraries;
 			path = "Mobile Mom/Libraries";
-			sourceTree = "<group>";
-		};
-		275AFA5B17CD3CA5003BB54D /* iCarousel */ = {
-			isa = PBXGroup;
-			children = (
-				275AFA5C17CD3CA5003BB54D /* iCarousel.h */,
-				275AFA5D17CD3CA5003BB54D /* iCarousel.m */,
-			);
-			path = iCarousel;
 			sourceTree = "<group>";
 		};
 		275AFA5E17CD3CA5003BB54D /* LayoutOfRelativity */ = {
@@ -1510,7 +1497,6 @@
 				275AFB6F17CD3CA6003BB54D /* UIButton+Switch.m in Sources */,
 				275AFB7017CD3CA6003BB54D /* UITextField+Icon.m in Sources */,
 				275AFB7117CD3CA6003BB54D /* UIView+FindFirstResponder.m in Sources */,
-				275AFB7B17CD3CA6003BB54D /* iCarousel.m in Sources */,
 				275AFB7C17CD3CA6003BB54D /* RelativityLaws.m in Sources */,
 				275AFB7D17CD3CA6003BB54D /* REMenu.m in Sources */,
 				275AFB7E17CD3CA6003BB54D /* REMenuContainerView.m in Sources */,

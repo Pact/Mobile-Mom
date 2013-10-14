@@ -38,7 +38,7 @@
     _login = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
     _login.delegate = self;
     
-    [Catalyze setApplicationKey:@"521f67720cf22551a7b12941" URLScheme:@"mobilemom" applicationId:[NSNumber numberWithLong:3]];
+    [Catalyze setApplicationKey:@"52572dc9993223edd2937923" URLScheme:@"mobilemom" applicationId:@"52c59275-4c46-400c-a04e-2976b8dea989"];
     
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
         //the app was launched from chrome because of a login, check the credentials
