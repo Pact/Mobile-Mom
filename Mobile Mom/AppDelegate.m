@@ -37,8 +37,7 @@
     _login = nil;
     _login = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
     _login.delegate = self;
-    
-    [Catalyze setApplicationKey:@"52572dc9993223edd2937923" URLScheme:@"mobilemom" applicationId:@"52c59275-4c46-400c-a04e-2976b8dea989"];
+    [Catalyze setApiKey:@"828b0bfc-1c3d-4677-83f9-b62cbf253fe2" applicationId:@"52c59275-4c46-400c-a04e-2976b8dea989"];
     
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
         //the app was launched from chrome because of a login, check the credentials
@@ -106,21 +105,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    [Catalyze handleOpenURL:url withBlock:^(BOOL authenticated, BOOL newUser) {
-        if (authenticated) {
-            if (newUser) {
-                [self userDidRegister];
-            } else {
-                [self userDidLogin];
-            }
-        } else {
-            [[[UIAlertView alloc] initWithTitle:@"Authentication Failed" message:@"You did not log in successfully, please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-        }
-    }];
-    return YES;
 }
 
 #pragma mark - LoginViewControllerDelegate

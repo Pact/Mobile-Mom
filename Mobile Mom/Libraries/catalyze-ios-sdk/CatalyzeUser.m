@@ -32,7 +32,6 @@
 #define kEncodeKeyStreet @"street"
 #define kEncodeKeyLastName @"last_name"
 #define kEncodeKeyFirstName @"first_name"
-#define kEncodeKeyUserId @"user_id"
 #define kEncodeKeyUsername @"username"
 
 @interface CatalyzeUser()
@@ -51,6 +50,8 @@ static CatalyzeUser *currentUser;
             return @"male";
         case CatalyzeUserGenderUndifferentiated:
             return @"undifferentiated";
+        case CatalyzeUserGenderNil:
+            return nil;
     }
 }
 
@@ -61,6 +62,8 @@ static CatalyzeUser *currentUser;
         return CatalyzeUserGenderMale;
     } else if ([genderString isEqualToString:[CatalyzeUser genderToString:CatalyzeUserGenderUndifferentiated]]) {
         return CatalyzeUserGenderUndifferentiated;
+    } else if (!genderString) {
+        return CatalyzeUserGenderNil;
     } else {
         [[NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"%@ is not a valid gender. Must be \"female\", \"male\", or \"undifferentiated\"",genderString] userInfo:nil] raise];
         return 0;
@@ -71,7 +74,6 @@ static CatalyzeUser *currentUser;
     self = [super initWithClassName:kCatalyzeUser];
     [self setObject:[NSMutableDictionary dictionary] forKey:@"extras"];
     self.httpManager = [[CatalyzeHTTPManager alloc] init];
-    [self initCurrentUser];
     return self;
 }
 
@@ -87,7 +89,6 @@ static CatalyzeUser *currentUser;
     [aCoder encodeObject:[self street] forKey:kEncodeKeyStreet];
     [aCoder encodeObject:[self lastName] forKey:kEncodeKeyLastName];
     [aCoder encodeObject:[self firstName] forKey:kEncodeKeyFirstName];
-    [aCoder encodeObject:[self userId] forKey:kEncodeKeyUserId];
     [aCoder encodeObject:[self username] forKey:kEncodeKeyUsername];
 }
 
@@ -105,14 +106,17 @@ static CatalyzeUser *currentUser;
         [self setStreet:[aDecoder decodeObjectForKey:kEncodeKeyStreet]];
         [self setLastName:[aDecoder decodeObjectForKey:kEncodeKeyLastName]];
         [self setFirstName:[aDecoder decodeObjectForKey:kEncodeKeyFirstName]];
-        [self setUserId:[aDecoder decodeObjectForKey:kEncodeKeyUserId]];
         [self setUsername:[aDecoder decodeObjectForKey:kEncodeKeyUsername]];
     }
     return self;
 }
 
 - (void)logout {
-    [self.httpManager doGet:[NSString stringWithFormat:@"%@/%@/auth/signout",kCatalyzeBaseURL,[Catalyze applicationId]] block:^(int status, NSDictionary *response, NSError *error) {
+    [self logoutWithBlock:nil];
+}
+
+- (void)logoutWithBlock:(CatalyzeHTTPResponseBlock)block {
+    [self.httpManager doGet:[NSString stringWithFormat:@"%@/auth/signout",kCatalyzeBaseURL] block:^(int status, NSDictionary *response, NSError *error) {
         if (!error) {
             currentUser = nil;
             
@@ -122,14 +126,22 @@ static CatalyzeUser *currentUser;
             
             NSFileManager *fileManager = [NSFileManager defaultManager];
             [fileManager removeItemAtPath:archivePath error:nil];
+            if (block) {
+                block(status, response, error);
+            }
         } else {
-            NSLog(@"Logout unsuccessful");
+            if (CATALYZE_DEBUG) {
+                NSLog(@"Logout unsuccessful");
+            }
+            if (block) {
+                block(status, response, error);
+            }
         }
     }];
 }
 
 - (BOOL)isAuthenticated {
-    return ([self userId] == nil && [[self userId] isEqualToString:@""]);
+    return !([[NSUserDefaults standardUserDefaults] valueForKey:@"Authorization"] || [[[NSUserDefaults standardUserDefaults] valueForKey:@"Authorization"] isEqualToString:@""]);
 }
 
 + (CatalyzeUser *)user {
@@ -142,59 +154,21 @@ static CatalyzeUser *currentUser;
     return currentUser;
 }
 
-- (void)initCurrentUser {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *archivePath = [documentsDirectory stringByAppendingPathComponent:@"currentuser.archive"];
-    
-    currentUser = [NSKeyedUnarchiver unarchiveObjectWithFile:archivePath];
-}
-
-+ (void)saveCurrentUser {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *archivePath = [documentsDirectory stringByAppendingPathComponent:@"currentuser.archive"];
-    [NSKeyedArchiver archiveRootObject:currentUser toFile:archivePath];
-}
-
 #pragma mark - LogIn
-
-+ (void)logIn {
-    currentUser = [CatalyzeUser user];
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"Authorization"]) {
-        [[CatalyzeUser currentUser] retrieveInBackgroundWithBlock:^(CatalyzeObject *object, NSError *error) {
-            if (error) {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Authorization"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [CatalyzeUser logIn];
-            } else {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@://?authorized=true&userId=%@&new=false&sessionToken=%@",[Catalyze URLScheme],[[CatalyzeUser currentUser] userId],[[NSUserDefaults standardUserDefaults] valueForKey:@"Authorization"]]]];
-            }
-        }];
-    } else {
-        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"googlechromes://api.catalyze.io/v1/%i/auth/signin?callbackUri=%@://",[[Catalyze applicationId] intValue],[Catalyze URLScheme]]]]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"googlechromes://api.catalyze.io/v1/%i/auth/signin?callbackUri=%@://",[[Catalyze applicationId] intValue],[Catalyze URLScheme]]]];
-        } else {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://api.catalyze.io/v1/%i/auth/signin?callbackUri=%@://",[[Catalyze applicationId] intValue],[Catalyze URLScheme]]]];
-        }
-    }
-}
 
 + (void)logInWithUsernameInBackground:(NSString *)username password:(NSString *)password block:(CatalyzeHTTPResponseBlock)block {
     currentUser = [CatalyzeUser user];
-    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:username,@"email",password,@"password", nil];
+    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:username,@"username",password,@"password", nil];
     NSURL *url = [NSURL URLWithString:@""];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    [httpClient setDefaultHeader:@"X-Api-Key" value:[NSString stringWithFormat:@"ios %@ %@",[[NSBundle mainBundle] bundleIdentifier], [Catalyze applicationKey]]];
+    [httpClient setDefaultHeader:@"X-Api-Key" value:[NSString stringWithFormat:@"ios %@ %@",[[NSBundle mainBundle] bundleIdentifier], [Catalyze apiKey]]];
     [httpClient setParameterEncoding:AFJSONParameterEncoding];
-    [httpClient postPath:[NSString stringWithFormat:@"https://api.catalyze.io/v1/%@/auth/signin/json",[Catalyze applicationId]] parameters:body success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [httpClient postPath:@"https://api.catalyze.io/v1/auth/signin" parameters:body success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) {
-            responseObject = [NSDictionary dictionary]; // FIXME: does this work?
+            responseObject = [NSDictionary dictionary];
         }
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
-        
-        NSString *cname = [currentUser catalyzeClassName];
-        currentUser = [[CatalyzeUser alloc] initWithClassName:cname];
+        currentUser = [[CatalyzeUser alloc] initWithClassName:kCatalyzeUser];
         for (NSString *s in [dict allKeys]) {
             if (![s isEqualToString:@"sessionToken"] && ![s isEqualToString:@"appId"]) {
                 [currentUser setObject:[dict objectForKey:s] forKey:s];
@@ -203,8 +177,12 @@ static CatalyzeUser *currentUser;
         
         [currentUser resetDirty];
         
-        [[NSUserDefaults standardUserDefaults] setInteger:[[dict valueForKey:@"id"] integerValue] forKey:@"catalyze_user_id"];
-        [[NSUserDefaults standardUserDefaults] setValue:[dict valueForKey:@"sessionToken"] forKey:@"Authorization"];
+        if ([dict valueForKey:@"id"]) {
+            [[NSUserDefaults standardUserDefaults] setInteger:[[dict valueForKey:@"id"] integerValue] forKey:@"catalyze_user_id"];
+        }
+        if ([dict valueForKey:@"sessionToken"]) {
+            [[NSUserDefaults standardUserDefaults] setValue:[dict valueForKey:@"sessionToken"] forKey:@"Authorization"];
+        }
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         block([[operation response] statusCode], dict, nil);
@@ -221,10 +199,14 @@ static CatalyzeUser *currentUser;
 + (void)signUpWithUsernameInBackground:(NSString *)username password:(NSString *)password firstName:(NSString *)firstName lastName:(NSString *)lastName block:(CatalyzeHTTPResponseBlock)block {
     currentUser = [CatalyzeUser user];
     NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:username,@"username",password,@"password",firstName,@"firstName",lastName,@"lastName", nil];
-    [currentUser.httpManager doPost:[NSString stringWithFormat:@"https://api.catalyze.io/v1/%@/user",[Catalyze applicationId]] withParams:body block:^(int status, NSDictionary *response, NSError *error) {
+    [currentUser.httpManager doPost:@"https://api.catalyze.io/v1/user" withParams:body block:^(int status, NSDictionary *response, NSError *error) {
         if (!error) {
-            [[NSUserDefaults standardUserDefaults] setInteger:[[response valueForKey:@"id"] integerValue] forKey:@"catalyze_user_id"];
-            [[NSUserDefaults standardUserDefaults] setValue:[response valueForKey:@"sessionToken"] forKey:@"Authorization"];
+            if ([response valueForKey:@"id"]) {
+                [[NSUserDefaults standardUserDefaults] setInteger:[[response valueForKey:@"id"] integerValue] forKey:@"catalyze_user_id"];
+            }
+            if ([response valueForKey:@"sessionToken"]) {
+                [[NSUserDefaults standardUserDefaults] setValue:[response valueForKey:@"sessionToken"] forKey:@"Authorization"];
+            }
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
         block(status, nil, error);
@@ -257,14 +239,6 @@ static CatalyzeUser *currentUser;
 
 - (void)setUsername:(NSString *)username {
     [self setObject:username forKey:@"username"];
-}
-
-- (NSString *)userId {
-    return [self objectForKey:@"id"];
-}
-
-- (void)setUserId:(NSString *)userId {
-    [self setObject:userId forKey:@"id"];
 }
 
 - (NSString *)firstName {

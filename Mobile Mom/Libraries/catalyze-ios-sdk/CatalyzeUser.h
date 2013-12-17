@@ -44,7 +44,8 @@ Or to get and save custom fields on the currentUser, it would look like this:
 typedef enum {
     CatalyzeUserGenderFemale,
     CatalyzeUserGenderMale,
-    CatalyzeUserGenderUndifferentiated
+    CatalyzeUserGenderUndifferentiated,
+    CatalyzeUserGenderNil
 } CatalyzeUserGender;
 
 @interface CatalyzeUser : CatalyzeObject<NSCoding>
@@ -82,6 +83,8 @@ typedef enum {
  */
 - (void)logout;
 
+- (void)logoutWithBlock:(CatalyzeHTTPResponseBlock)block;
+
 /**
  @return YES if the CatalyzeUser has been logged in and has a valid session, otherwise NO
  */
@@ -115,8 +118,6 @@ typedef enum {
  properly, ensure that your iOS callback URL Scheme was set in your 
  application:didFinishLaunchingWithOptions: method.
  */
-+ (void)logIn;
-
 + (void)logInWithUsernameInBackground:(NSString *)username password:(NSString *)password block:(CatalyzeHTTPResponseBlock)block;
 
 /** @name SignUp */
@@ -145,21 +146,6 @@ typedef enum {
  @param key the key to look for an extra under that should be removed when found
  */
 - (void)removeExtraForKey:(NSString *)key;
-
-/** @name User Id */
-
-/**
- @return the unique identifier of the CatalyzeUser on the catalyze.io API.  This will be set if the 
- user has been authenticated, otherwise if no network request has been made, this will most likely 
- be nil.
- */
-- (NSString *)userId;
-
-/**
- @param userId the unique identifier of the CatalyzeUser on the catalyze.io API.  
- Used when you have the userId and want to retrieve information about a CatalyzeUser.
- */
-- (void)setUserId:(NSString *)userId;
 
 /** @name Username */
 
