@@ -40,8 +40,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.hidesBackButton = YES;
-    if ([[CatalyzeUser currentUser] firstName] != nil && [[CatalyzeUser currentUser] lastName] != nil) {
-        self.navigationItem.title = [NSString stringWithFormat:@"%@ %@",[[CatalyzeUser currentUser] firstName],[[CatalyzeUser currentUser] lastName]];
+    if ([[[CatalyzeUser currentUser] name] firstName] != nil && [[[CatalyzeUser currentUser] name] lastName] != nil) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@ %@",[[[CatalyzeUser currentUser] name] firstName],[[[CatalyzeUser currentUser] name] lastName]];
     }
     
     _cancel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 35)];
@@ -169,8 +169,8 @@
     [_btnPrev setUserInteractionEnabled:NO];
     [_btnPrev setHidden:YES];
     
-    if ([[CatalyzeUser currentUser] firstName] != nil && [[CatalyzeUser currentUser] lastName] != nil) {
-        self.navigationItem.title = [NSString stringWithFormat:@"%@ %@",[[CatalyzeUser currentUser] firstName],[[CatalyzeUser currentUser] lastName]];
+    if ([[[CatalyzeUser currentUser] name] firstName] != nil && [[[CatalyzeUser currentUser] name] lastName] != nil) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%@ %@",[[[CatalyzeUser currentUser] name] firstName],[[[CatalyzeUser currentUser] name] lastName]];
     }
 
     self.view.backgroundColor = [UIColor whiteColor];

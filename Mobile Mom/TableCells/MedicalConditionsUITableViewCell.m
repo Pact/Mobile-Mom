@@ -149,25 +149,25 @@
     if (sender == _switchAbnormalitiesOfAorta) {
         [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLAbnormalitiesOfAorta];
     } else if (sender == _switchAbnormalitiesOfBloodVessels) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLAbnormalitiesOfBloodVessels];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfBloodVessels.isOn] forKey:kBOOLAbnormalitiesOfBloodVessels];
     } else if (sender == _switchCongenitalHeartDisease) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLCongenitalHeartDisease];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchCongenitalHeartDisease.isOn] forKey:kBOOLCongenitalHeartDisease];
     } else if (sender == _switchDevelopmentalDelay) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLDevelopmentalDelay];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchDevelopmentalDelay.isOn] forKey:kBOOLDevelopmentalDelay];
     } else if (sender == _switchEndocrineAbnormalities) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLEndocrineAbnormalities];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchEndocrineAbnormalities.isOn] forKey:kBOOLEndocrineAbnormalities];
     } else if (sender == _switchHypertension) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLHypertension];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchHypertension.isOn] forKey:kBOOLHypertension];
     } else if (sender == _switchMastocytosis) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLMastocytosis];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchMastocytosis.isOn] forKey:kBOOLMastocytosis];
     } else if (sender == _switchMigraine) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLMigraine];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchMigraine.isOn] forKey:kBOOLMigraine];
     } else if (sender == _switchOcularAbnormalities) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLOcularAbnormalities];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchOcularAbnormalities.isOn] forKey:kBOOLOcularAbnormalities];
     } else if (sender == _switchSeizures) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLSeizures];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchSeizures.isOn] forKey:kBOOLSeizures];
     } else if (sender == _switchStroke) {
-        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchAbnormalitiesOfAorta.isOn] forKey:kBOOLStroke];
+        [[CatalyzeUser currentUser] setExtra:[NSNumber numberWithBool:_switchStroke.isOn] forKey:kBOOLStroke];
     }
 }
 

@@ -85,7 +85,6 @@
     } else {
         retval = nil;
     }
-    NSLog(@"returning %@",retval);
     return retval;
 }
 

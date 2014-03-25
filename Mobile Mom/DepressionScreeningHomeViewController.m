@@ -43,14 +43,15 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     CatalyzeQuery *query = [CatalyzeQuery queryWithClassName:@"depressionScreening"];
-    [query setQueryValue:[NSNumber numberWithLong:[[NSUserDefaults standardUserDefaults] integerForKey:@"catalyze_user_id"]]];
+    [query setQueryValue:[[CatalyzeUser currentUser] usersId]];
     [query setQueryField:@"parentId"];
     [query setPageNumber:1];
-    [query setPageSize:100]; // TODO: fix this in the future
+    [query setPageSize:100];
     [query retrieveInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             NSLog(@"query completed with error - %@",error);
         } else {
+            NSLog(@"success: %@", objects);
             _screenings = [NSMutableArray arrayWithArray:objects];
             [_tblSurveys reloadData];
         }

@@ -9,7 +9,7 @@
 #import "AddressUITableViewCell.h"
 #import "UIButton+Switch.h"
 #import "Constants.h"
-#import "CatalyzeUser.h"
+#import "Catalyze.h"
 
 @implementation AddressUITableViewCell
 
@@ -49,10 +49,12 @@
     [_txtState setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
     [_txtZip setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
     
-    [_txtAddress setText:[[CatalyzeUser currentUser] street]];
-    [_txtCity setText:[[CatalyzeUser currentUser] city]];
-    [_txtState setText:[[CatalyzeUser currentUser] state]];
-    [_txtZip setText:[[CatalyzeUser currentUser] zipCode]];
+    if ([[CatalyzeUser currentUser] addresses].count > 0) {
+        [_txtAddress setText:[((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) addressLine1]];
+        [_txtCity setText:[((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) city]];
+        [_txtState setText:[((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) state]];
+        [_txtZip setText:[((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) zipCode]];
+    }
     
     [_lblPlus setFont:[UIFont fontWithName:@"Raleway" size:26.0f]];
     
@@ -135,11 +137,13 @@
         [_txtZip becomeFirstResponder];
     }
     
-    [[CatalyzeUser currentUser] setStreet:_txtAddress.text];
-    [[CatalyzeUser currentUser] setCity:_txtCity.text];
-    [[CatalyzeUser currentUser] setState:_txtState.text];
-    [[CatalyzeUser currentUser] setZipCode:_txtZip.text];
-    [[CatalyzeUser currentUser] setCountry:@"US"];
+    [[[CatalyzeUser currentUser] addresses] addObject:[[Address alloc] init]];
+    [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setAddressLine1:_txtAddress.text];
+    [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setCity:_txtCity.text];
+    [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setState:_txtState.text];
+    [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setZipCode:_txtZip.text];
+    [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setCountry:@"US"];
+    [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setType:@"home"];
     
     [self checkForFinish];
     return YES;

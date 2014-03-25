@@ -48,6 +48,8 @@
                                                  name:UIKeyboardDidHideNotification object:nil];
     
     _lv = [[JALoadingView alloc] initJALoadingViewWithView:self.view];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -122,7 +124,15 @@
     if (_stepTwo) {
         if ([self validateInput:YES]) {
             [_lv showJALoadingView];
-            [CatalyzeUser signUpWithUsernameInBackground:_txtUsername.text password:_txtPassword.text firstName:_txtFirstName.text lastName:_txtLastName.text block:^(int status, NSDictionary *response, NSError *error) {
+            Name *name = [[Name alloc] init];
+            [name setFirstName:_txtFirstName.text];
+            [name setLastName:_txtLastName.text];
+            
+            Email *email = [[Email alloc] init];
+            [email setPrimary:_txtUsername.text];
+            
+            [CatalyzeUser signUpWithUsernameInBackground:_txtUsername.text email:email name:name password:_txtPassword.text block:^(int status, NSString *response, NSError *error) {
+                NSLog(@"response: %i - %@ - %@", status, response, error);
                 [_lv dismissJALoadingView];
                 if (!error) {
                     [_delegate userDidRegister];
@@ -155,7 +165,7 @@
 - (IBAction)login:(id)sender {
     if ([self validateInput:NO]) {
         [_lv showJALoadingView];
-        [CatalyzeUser logInWithUsernameInBackground:_txtUsername.text password:_txtPassword.text block:^(int status, NSDictionary *response, NSError *error) {
+        [CatalyzeUser logInWithUsernameInBackground:_txtUsername.text password:_txtPassword.text block:^(int status, NSString *response, NSError *error) {
             [_lv dismissJALoadingView];
             if (!error) {
                 NSLog(@"successful login");

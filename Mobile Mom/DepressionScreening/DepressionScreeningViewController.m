@@ -110,7 +110,6 @@
 - (void)finishedQuestionNumber:(int)questionNumber {
     switch (questionNumber) {
         case 1: {
-            NSLog(@"frame: %f, %f, %f, %f",_question1.frame.origin.x, _question1.frame.origin.y, _question1.frame.size.width, _question1.frame.size.height);
             [UIView transitionFromView:_question1 toView:_question2 duration:0.4 options:UIViewAnimationOptionTransitionFlipFromTop completion:^(BOOL finished) {
                 [_question2 setup];
                 [_progressIndicator setProgress:0.2 animated:YES];
@@ -263,7 +262,6 @@
 }
 
 - (IBAction)next:(id)sender {
-    NSLog(@"next!");
     NSString *value = [[_questions objectAtIndex:(_currentQuestion-1)] validateInput];
     if (value) {
         [_screening setObject:value forKey:[[_questions objectAtIndex:(_currentQuestion-1)] questionText]];

@@ -36,9 +36,9 @@
     [_txtMI setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
     [_txtLastName setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
     
-    [_txtFirstName setText:[[CatalyzeUser currentUser] firstName]];
+    [_txtFirstName setText:[[[CatalyzeUser currentUser] name] firstName]];
     [_txtMI setText:[[CatalyzeUser currentUser] extraForKey:kMiddleInitial]];
-    [_txtLastName setText:[[CatalyzeUser currentUser] lastName]];
+    [_txtLastName setText:[[[CatalyzeUser currentUser] name] lastName]];
     
     [_txtLastName setNeedsLayout];
     [_txtFirstName setNeedsLayout];
@@ -114,8 +114,8 @@
     }
     
     [[CatalyzeUser currentUser] setExtra:_txtMI.text forKey:@"middle_initial"];
-    [[CatalyzeUser currentUser] setFirstName:_txtFirstName.text];
-    [[CatalyzeUser currentUser] setLastName:_txtLastName.text];
+    [[[CatalyzeUser currentUser] name] setFirstName:_txtFirstName.text];
+    [[[CatalyzeUser currentUser] name] setLastName:_txtLastName.text];
     
     [self checkForFinish];
     return YES;
