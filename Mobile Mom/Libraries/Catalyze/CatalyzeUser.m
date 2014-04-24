@@ -490,15 +490,20 @@ static CatalyzeUser *currentUser;
     NSMutableArray *socialIds = [NSMutableArray array];
     NSMutableArray *mrns = [NSMutableArray array];
     NSMutableArray *healthPlans = [NSMutableArray array];
-    NSMutableDictionary *extras = [NSMutableDictionary dictionary];
     
-    [email setValuesForKeysWithDictionary:[dict objectForKey:@"email"]];
+    if ([dict objectForKey:@"email"]) {
+        [email setValuesForKeysWithDictionary:[dict objectForKey:@"email"]];
+    }
     [dict setObject:email forKey:@"email"];
     
-    [name setValuesForKeysWithDictionary:[dict objectForKey:@"name"]];
+    if ([dict objectForKey:@"name"]) {
+        [name setValuesForKeysWithDictionary:[dict objectForKey:@"name"]];
+    }
     [dict setObject:name forKey:@"name"];
     
-    [phoneNumber setValuesForKeysWithDictionary:[dict objectForKey:@"phoneNumber"]];
+    if ([dict objectForKey:@"phoneNumber"]) {
+        [phoneNumber setValuesForKeysWithDictionary:[dict objectForKey:@"phoneNumber"]];
+    }
     [dict setObject:phoneNumber forKey:@"phoneNumber"];
     
     for (NSDictionary *ad in [dict objectForKey:@"addresses"]) {
@@ -546,7 +551,9 @@ static CatalyzeUser *currentUser;
     }
     [dict setObject:healthPlans forKey:@"healthPlans"];
     
-    [dict setObject:[NSMutableDictionary dictionaryWithDictionary:[dict objectForKey:@"extras"]] forKey:@"extras"];
+    if ([dict objectForKey:@"extras"]) {
+        [dict setObject:[NSMutableDictionary dictionaryWithDictionary:[dict objectForKey:@"extras"]] forKey:@"extras"];
+    }
     return dict;
 }
 

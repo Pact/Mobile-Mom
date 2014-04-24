@@ -137,7 +137,9 @@
         [_txtZip becomeFirstResponder];
     }
     
-    [[[CatalyzeUser currentUser] addresses] addObject:[[Address alloc] init]];
+    if ([[CatalyzeUser currentUser] addresses].count == 0) {
+        [[[CatalyzeUser currentUser] addresses] addObject:[[Address alloc] init]];
+    }
     [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setAddressLine1:_txtAddress.text];
     [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setCity:_txtCity.text];
     [((Address *)[[[CatalyzeUser currentUser] addresses] objectAtIndex:0]) setState:_txtState.text];
