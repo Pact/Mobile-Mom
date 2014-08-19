@@ -38,6 +38,7 @@
     [_txtPassword setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
     [_txtFirstName setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
     [_txtLastName setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
+    [_txtInviteCode setFont:[UIFont fontWithName:@"Raleway" size:14.0f]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeShown:)
@@ -131,7 +132,9 @@
             Email *email = [[Email alloc] init];
             [email setPrimary:_txtUsername.text];
             
-            [CatalyzeUser signUpWithUsernameInBackground:_txtUsername.text email:email name:name password:_txtPassword.text block:^(int status, NSString *response, NSError *error) {
+            //you may also omit the inviteCode parameter. for demonstration purposes this app sends it either way.
+            //it does not have any negative effects if it is sent and is unnecessary.
+            [CatalyzeUser signUpWithUsernameInBackground:_txtUsername.text email:email name:name password:_txtPassword.text inviteCode:_txtInviteCode.text block:^(int status, NSString *response, NSError *error) {
                 NSLog(@"response: %i - %@ - %@", status, response, error);
                 [_lv dismissJALoadingView];
                 if (!error) {
@@ -158,6 +161,8 @@
             [_txtFirstName setUserInteractionEnabled:YES];
             _txtLastName.alpha = 1.0;
             [_txtLastName setUserInteractionEnabled:YES];
+            _txtInviteCode.alpha = 1.0;
+            [_txtInviteCode setUserInteractionEnabled:YES];
         }];
     }
 }
@@ -178,7 +183,7 @@
 }
 
 - (void)keyboardWillBeShown:(NSNotification*)aNotification {
-    if ([_txtFirstName isFirstResponder] || [_txtLastName isFirstResponder]) {
+    if ([_txtFirstName isFirstResponder] || [_txtLastName isFirstResponder] || [_txtInviteCode isFirstResponder]) {
         [UIView animateWithDuration:0.2 animations:^{
             CGRect frame = _viewSignin.frame;
             frame.origin.y = _txtUsername.frame.origin.y;
@@ -194,7 +199,7 @@
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
-    if (![_txtFirstName isFirstResponder] && ![_txtLastName isFirstResponder] && ![_txtUsername isFirstResponder] && ![_txtPassword isFirstResponder] && _txtFirstName.alpha == 1.0) {
+    if (![_txtInviteCode isFirstResponder] && ![_txtFirstName isFirstResponder] && ![_txtLastName isFirstResponder] && ![_txtUsername isFirstResponder] && ![_txtPassword isFirstResponder] && _txtFirstName.alpha == 1.0) {
         [UIView animateWithDuration:0.2 animations:^{
             CGRect frame = _viewSignin.frame;
             frame.origin.y = _txtPassword.frame.size.height + _txtPassword.frame.origin.y + 20;
@@ -219,6 +224,8 @@
         [_txtFirstName becomeFirstResponder];
     } else if (textField == _txtFirstName) {
         [_txtLastName becomeFirstResponder];
+    } else if (textField == _txtLastName) {
+        [_txtInviteCode becomeFirstResponder];
     }
     return YES;
 }

@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet DashedBorderUITextField *txtPassword;
 @property (weak, nonatomic) IBOutlet DashedBorderUITextField *txtFirstName;
 @property (weak, nonatomic) IBOutlet DashedBorderUITextField *txtLastName;
+@property (weak, nonatomic) IBOutlet DashedBorderUITextField *txtInviteCode;
 - (IBAction)signUp:(id)sender;
 - (IBAction)login:(id)sender;
 

@@ -177,7 +177,7 @@
             NSLog(@"finished screening");
             JALoadingView *loading = [[JALoadingView alloc] initJALoadingViewWithView:self.view];
             [loading showJALoadingView];
-            [_screening setObject:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]] forKey:@"title"];
+            [[_screening content] setObject:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]] forKey:@"title"];
             [_screening createInBackgroundWithBlock:^(BOOL succeeded, int status, NSError *error) {
                 [loading dismissJALoadingView];
                 if (succeeded) {
@@ -264,7 +264,7 @@
 - (IBAction)next:(id)sender {
     NSString *value = [[_questions objectAtIndex:(_currentQuestion-1)] validateInput];
     if (value) {
-        [_screening setObject:value forKey:[[_questions objectAtIndex:(_currentQuestion-1)] questionText]];
+        [[_screening content] setObject:value forKey:[[_questions objectAtIndex:(_currentQuestion-1)] questionText]];
         [self finishedQuestionNumber:_currentQuestion];
         _currentQuestion++;
     }

@@ -74,6 +74,7 @@
     [_lblTitle setFont:[UIFont fontWithName:@"Raleway" size:18.0f]];
     [_lblTitle setText:title];
     
+    [self updateChosen:NO];
     [self checkForFinish];
 }
 
@@ -95,11 +96,12 @@
     }];
 }
 
-- (void)uncover:(AnimationBlock)block {
-    [self enableTextFields:YES];
+- (void)updateChosen:(BOOL)updateLayout {
     if ([[CatalyzeUser currentUser] extraForKey:kRaceSection]) {
         _chosen = YES;
-        [self updateRacesWithRace:[[CatalyzeUser currentUser] extraForKey:kRaceSection]];
+        if (updateLayout) {
+            [self updateRacesWithRace:[[CatalyzeUser currentUser] extraForKey:kRaceSection]];
+        }
         if ([[[CatalyzeUser currentUser] extraForKey:kRace] isEqualToString:_lblOne.text]) {
             [_groupRace clickedButton:_btnOne];
         } else if ([[[CatalyzeUser currentUser] extraForKey:kRace] isEqualToString:_lblTwo.text]) {
@@ -123,6 +125,11 @@
     } else {
         [self updateRacesWithRace:_lblRace.text];
     }
+}
+
+- (void)uncover:(AnimationBlock)block {
+    [self enableTextFields:YES];
+    [self updateChosen:YES];
     
     [UIView animateWithDuration:0.2 animations:^{
         [_lblPlus setText:@"-"];

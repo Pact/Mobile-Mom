@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
@@ -11,6 +11,7 @@
                 <outlet property="btnSignup" destination="qUM-5b-N3k" id="UAn-ZO-SJs"/>
                 <outlet property="lblDescription" destination="GLA-PZ-0vl" id="q79-Uo-zc7"/>
                 <outlet property="txtFirstName" destination="cd9-qx-V9A" id="YIk-7F-lIH"/>
+                <outlet property="txtInviteCode" destination="UIp-Rk-Pvy" id="Gpf-fk-eVp"/>
                 <outlet property="txtLastName" destination="ZLS-kd-DAy" id="BHK-QJ-0G0"/>
                 <outlet property="txtPassword" destination="rYO-AS-zXh" id="udy-Op-eLY"/>
                 <outlet property="txtUsername" destination="ejt-hd-b8T" id="QWB-Sx-1QQ"/>
@@ -27,11 +28,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="Mm1-7m-4VA">
-                    <rect key="frame" x="46" y="280" width="240" height="123"/>
+                    <rect key="frame" x="46" y="280" width="240" height="173"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="aWu-t1-Bbc">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="80"/>
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="130"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="first name" minimumFontSize="17" id="cd9-qx-V9A" customClass="DashedBorderUITextField">
@@ -50,6 +51,15 @@
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go"/>
                                     <connections>
                                         <outlet property="delegate" destination="-1" id="Lfb-1L-ZUF"/>
+                                    </connections>
+                                </textField>
+                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="invite code" minimumFontSize="17" id="UIp-Rk-Pvy" customClass="DashedBorderUITextField">
+                                    <rect key="frame" x="0.0" y="100" width="240" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="gNl-IT-Or4"/>
                                     </connections>
                                 </textField>
                             </subviews>

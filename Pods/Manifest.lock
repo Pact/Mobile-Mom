@@ -1,0 +1,13 @@
+PODS:
+  - ISMethodSwizzling (0.0.2)
+  - ISRefreshControl (1.4.1):
+    - ISMethodSwizzling (~> 0.0.2)
+
+DEPENDENCIES:
+  - ISRefreshControl (~> 1.4)
+
+SPEC CHECKSUMS:
+  ISMethodSwizzling: 867d17ca20bd0ca2d3e7c1516a0c1f0ee9ca94c9
+  ISRefreshControl: a22ffc641933ca489b85d192d591546f93c47d07
+
+COCOAPODS: 0.33.1

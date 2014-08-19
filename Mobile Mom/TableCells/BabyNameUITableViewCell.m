@@ -40,9 +40,9 @@
     [_txtMI setText:[[CatalyzeUser currentUser] extraForKey:kBabyMiddleInitial]];
     [_txtLastName setText:[[CatalyzeUser currentUser] extraForKey:kBabyLastName]];
     
-    [_txtLastName setNeedsLayout];
     [_txtFirstName setNeedsLayout];
     [_txtMI setNeedsLayout];
+    [_txtLastName setNeedsLayout];
     
     [_lblPlus setFont:[UIFont fontWithName:@"Raleway" size:26.0f]];
     
@@ -113,8 +113,8 @@
         [_txtLastName becomeFirstResponder];
     }
     
-    [[CatalyzeUser currentUser] setExtra:_txtMI.text forKey:kBabyMiddleInitial];
     [[CatalyzeUser currentUser] setExtra:_txtFirstName.text forKey:kBabyFirstName];
+    [[CatalyzeUser currentUser] setExtra:_txtMI.text forKey:kBabyMiddleInitial];
     [[CatalyzeUser currentUser] setExtra:_txtLastName.text forKey:kBabyLastName];
     
     [self checkForFinish];

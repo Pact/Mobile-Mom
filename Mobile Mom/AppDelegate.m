@@ -37,7 +37,9 @@
     _login = nil;
     _login = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
     _login.delegate = self;
-    [Catalyze setApiKey:@"6fd8e9a4-ed96-45b3-9896-90f2b958f30b" applicationId:@"5884facc-73eb-4bf2-a175-4a8e48c9561e"];
+    //[Catalyze setApiKey:@"ios io.catalyze.Mobile-Mom 6fd8e9a4-ed96-45b3-9896-90f2b958f30b" applicationId:@"5884facc-73eb-4bf2-a175-4a8e48c9561e"];
+    [Catalyze setApiKey:@"ios io.catalyze.Mobile-Mom b48139f0-0446-45fa-a719-0cc2206e68fa" applicationId:@"a8d199d4-5601-4f07-bd5a-f9d7890969e0"];
+    [Catalyze setLoggingLevel:kLoggingLevelDebug];
     
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
         //the app was launched from chrome because of a login, check the credentials

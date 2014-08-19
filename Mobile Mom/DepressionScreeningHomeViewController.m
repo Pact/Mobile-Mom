@@ -43,8 +43,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     CatalyzeQuery *query = [CatalyzeQuery queryWithClassName:@"depressionScreening"];
-    [query setQueryValue:[[CatalyzeUser currentUser] usersId]];
-    [query setQueryField:@"parentId"];
+    //[query setQueryValue:[[CatalyzeUser currentUser] usersId]];
+    //[query setQueryField:@"parentId"];
     [query setPageNumber:1];
     [query setPageSize:100];
     [query retrieveInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -53,8 +53,33 @@
         } else {
             NSLog(@"success: %@", objects);
             _screenings = [NSMutableArray arrayWithArray:objects];
+            [self runTest:[_screenings objectAtIndex:0]];
             [_tblSurveys reloadData];
         }
+    }];
+}
+
+- (void)runTest:(id)unknown_object {
+    NSLog(@"object: %@", unknown_object);
+    NSLog(@"class: %@", [unknown_object class]);
+    CatalyzeObject *object = (CatalyzeObject *)unknown_object;
+    NSLog(@"entryId: %@", object.entryId);
+    NSLog(@"authorId: %@", object.authorId);
+    NSLog(@"parentId: %@", object.parentId);
+    //NSLog(@"content: %@", object.content);
+    NSLog(@"updatedAt: %@", object.updatedAt);
+    NSLog(@"createdAt: %@", object.createdAt);
+    NSLog(@"className: %@", object.className);
+    [object setValue:@"testing" forKey:@"I have looked forward with enjoyment to things"];
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, int status, NSError *error) {
+        NSLog(@"success?: %@", succeeded ? @"true" : @"false");
+        NSLog(@"entryId2: %@", object.entryId);
+        NSLog(@"authorId2: %@", object.authorId);
+        NSLog(@"parentId2: %@", object.parentId);
+        //NSLog(@"content2: %@", object.content);
+        NSLog(@"updatedAt2: %@", object.updatedAt);
+        NSLog(@"createdAt2: %@", object.createdAt);
+        NSLog(@"className2: %@", object.className);
     }];
 }
 

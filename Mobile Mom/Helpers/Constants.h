@@ -43,7 +43,7 @@
 /** Profile Childs Info **/
 // Baby Name
 #define kBabyFirstName @"baby_first_name"
-#define kBabyLastName @"baby_first_name"
+#define kBabyLastName @"baby_last_name"
 #define kBabyMiddleInitial @"baby_middle_initial"
 
 // Date of Birth
